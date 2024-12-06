@@ -32,22 +32,30 @@ const startTimer = (event) => {
 }
 
 const updateTimer = () => {
-    remainingTime =remainingTime -1;
-    hours = Math.floor(remainingTime / 3600);
-    minute = Math.floor(remainingTime % 3600 / 60);
-    second = remainingTime % 60;
-
-    hoursInput.value = hours;
-    minutesInput.value = minute;
-    secondsInput.value = second;
+    if (remainingTime > 0) {
+        remainingTime =remainingTime -1;
+        hours = Math.floor(remainingTime / 3600);
+        minute = Math.floor(remainingTime % 3600 / 60);
+        second = remainingTime % 60;
+    
+        hoursInput.value = hours.toString().padStart(2, "0");
+        minutesInput.value = minute.toString().padStart(2, "0");
+        secondsInput.value = second.toString().padStart(2, "0");
+    } else{
+        stopTimer();
+    }
 
 }
+    
+
 
 const stopTimer = () => {
     clearInterval(intervalId);
-    document.exitFullscreen();
     hideElement(stopButton);
-    showElement(startButton);
+    setTimeout(() => {
+        document.exitFullscreen();
+        showElement(startButton);
+    }, 1000);
 }
 
 const hideElement = (element) => {
